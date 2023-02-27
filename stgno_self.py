@@ -18,7 +18,7 @@ customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "gr
 
 from sqlalchemy import extract
 
-logo_path="./steg/hide-layer.ico"
+logo_path="hide-layer.ico"
 
 class STEG():
     
@@ -73,7 +73,15 @@ class STEG():
         MS_label1=customtkinter.CTkLabel(tab3, text='Message Stegnography 📨',font=("Papyrus", 27,"bold"))#,bg="black", fg="#F7FF06")
         MS_label1.place(relx=0.5,rely=0.065, anchor=CENTER)
         
+            #Window Theme (Dark Mode/Light Mode)
+        def change_appearance_mode_event(new_appearance_mode: str):
+                customtkinter.set_appearance_mode(new_appearance_mode)
 
+
+        appearance_mode_optionemenu = customtkinter.CTkOptionMenu(tab1, values=["Light", "Dark", "System"],command=change_appearance_mode_event, font=("Papyrus", 16, "bold"))
+        appearance_mode_optionemenu.place(relx=0.75,rely=0.015)
+        #default
+        appearance_mode_optionemenu.set("Dark")
        
             
 
@@ -123,6 +131,129 @@ class STEG():
         
 
         
+
+###########################################################################################################################################################################################################################
+# Loop back function to main screen
+    def back(self,frame):
+        frame.destroy()
+        self.main(root)
+
+    
+    #GUI Image Encryption
+    def encode_frame1(self,F):
+        F.destroy()
+        F2 = customtkinter.CTkFrame(root)
+        F2.pack(fill=BOTH, expand=1)
+
+        lab= customtkinter.CTkLabel(F2,text='Image Encryption', font=("Papyrus", 24,"bold"))
+        lab.place(relx=0.5,rely=0.105, anchor=CENTER)
+
+        label1= customtkinter.CTkLabel(F2,text='Select the image file in which you wish to ENCRYPT some text:', font=("Papyrus", 20,"bold"))
+        label1.place(relx=0.5,rely=0.305, anchor=CENTER)
+
+
+        button_bws = customtkinter.CTkButton(F2,text='Select Image File',command=lambda : self.encode_frame2(F2),font=("Papyrus", 20,"bold"))
+        button_bws.place(relx=0.5,rely=0.505, anchor=CENTER)
+
+        button_back = customtkinter.CTkButton(F2, text='Cancel', command= lambda : STEG.back(self,F2),font=("Papyrus", 20,"bold"))
+        button_back.place(relx=0.5,rely=0.605, anchor=CENTER)
+
+
+    #GUI Image Decryption
+    def decode_frame1(self,F):
+        F.destroy()
+        d_f2 = customtkinter.CTkFrame(root)
+        d_f2.pack(fill=BOTH, expand=1)
+
+        lab= customtkinter.CTkLabel(d_f2,text='Image Decryption', font=("Papyrus", 24,"bold"))
+        lab.place(relx=0.5,rely=0.105, anchor=CENTER)
+
+        label1 = customtkinter.CTkLabel(d_f2, text='Select the image containing hidden text which you wish to DECRYPT:',font=("Papyrus", 20,"bold"))
+        label1.place(relx=0.5,rely=0.305, anchor=CENTER)
+
+        button_bws = customtkinter.CTkButton(d_f2, text='Select Image File', command=lambda :self.decode_frame2(d_f2),font=("Papyrus", 20,"bold"))
+        button_bws.place(relx=0.5,rely=0.505, anchor=CENTER)
+
+
+        button_back = customtkinter.CTkButton(d_f2, text='Cancel', command=lambda : STEG.back(self,d_f2),font=("Papyrus", 20,"bold"))
+        button_back.place(relx=0.5,rely=0.605, anchor=CENTER)
+
+
+
+    #Function to encrypt image 
+    def encode_frame2(self,e_F2):
+        e_pg= customtkinter.CTkFrame(root)
+        e_pg.pack(fill=BOTH, expand=1)
+
+        myfile = tkinter.filedialog.askopenfilename(filetypes = ([('png', '*.png'),('jpeg', '*.jpeg'),('jpg', '*.jpg'),('All Files', '*.*')]))
+        if not myfile:
+            messagebox.showerror("Error","You have selected nothing!")
+        else:
+            my_img = Image.open(myfile)
+            new_image = my_img.resize((300,200))
+            img = ImageTk.PhotoImage(new_image)
+            label3= customtkinter.CTkLabel(e_pg,text='Selected Image',font=("Papyrus", 20,"bold"))
+            label3.place(relx=0.5,rely=0.1, anchor=CENTER)
+            board = Label(e_pg, image=img)
+            board.image = img
+            self.output_image_size = os.stat(myfile)
+            self.o_image_w, self.o_image_h = my_img.size
+            board.place(relx=0.5,rely=0.3, anchor=CENTER)
+            label2 = customtkinter.CTkLabel(e_pg, text='Enter the message',font=("Papyrus", 30,"bold"))
+            label2.place(relx=0.5,rely=0.56, anchor=CENTER)
+            text_a = Text(e_pg, width=50, height=10)
+            text_a.place(relx=0.5,rely=0.7, anchor=CENTER)
+            encode_button = customtkinter.CTkButton(e_pg, text='Cancel', command=lambda : STEG.back(self,e_pg),font=("Papyrus", 20,"bold"))
+            data = text_a.get("1.0", "end-1c")
+            button_back = customtkinter.CTkButton(e_pg, text='Encode', command=lambda : [self.enc_fun(text_a,my_img), STEG.back(self,e_pg)],font=("Papyrus", 20,"bold"))
+            button_back.place(relx=0.3,rely=0.90, anchor=CENTER)
+            encode_button.place(relx=0.7,rely=0.90, anchor=CENTER)
+            e_F2.destroy()
+
+
+
+
+
+    #Function to decrypt image 
+    def decode_frame2(self,d_F2):
+        d_F3 = customtkinter.CTkFrame(root)
+        d_F3.pack(fill=BOTH, expand=1)
+
+        myfiles = tkinter.filedialog.askopenfilename(filetypes = ([('png', '*.png'),('jpeg', '*.jpeg'),('jpg', '*.jpg'),('All Files', '*.*')]))
+        if not myfiles:
+            messagebox.showerror("Error","You have selected nothing!")
+        else:
+            my_img = Image.open(myfiles, 'r')
+            my_image = my_img.resize((300, 200))
+            img = ImageTk.PhotoImage(my_image)
+            label4= customtkinter.CTkLabel(d_F3,text='Selected Image :', font=("Papyrus", 20,"bold"))
+            label4.place(relx=0.5,rely=0.1, anchor=CENTER)
+            board = customtkinter.CTkLabel(d_F3, image=img)
+            board.image = img
+            board.place(relx=0.5,rely=0.3, anchor=CENTER)
+            hidden_data = self.decode(my_img)
+            label2 = customtkinter.CTkLabel(d_F3, text='The hidden data is :', font=("Papyrus", 20,"bold"))
+            label2.place(relx=0.5,rely=0.56, anchor=CENTER)
+            text_a = Text(d_F3, width=50, height=10)
+            text_a.insert(INSERT, hidden_data)
+            text_a.configure(state='disabled')
+            text_a.place(relx=0.5,rely=0.70, anchor=CENTER)
+            button_back = customtkinter.CTkButton(d_F3, text='Cancel', command= lambda :self.frame_3(d_F3), font=("Papyrus", 20,"bold"))
+            button_back.place(relx=0.5,rely=0.90, anchor=CENTER)
+            d_F2.destroy()
+
+
+
+    
+
+
+###############################################################################################################################################################################################################
+
+
+#-----------------------------------Message steg---------------------------
+
+
+#$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
 root = customtkinter.CTk()
