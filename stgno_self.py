@@ -280,7 +280,21 @@ class STEG():
         for i in data:
             new_data.append(format(ord(i), '08b'))
         return new_data
+    
+    #Function to enter the data pixels in image
+    def encode_enc(self,newImg, data):
+        w = newImg.size[0]
+        (x, y) = (0, 0)
 
+        for pixel in self.modify_Pix(newImg.getdata(), data):
+
+            # Placing modified pixels in the new image
+            newImg.putpixel((x, y), pixel)
+            if (x == w - 1):
+                x = 0
+                y += 1
+            else:
+                x += 1
 
     #Function to modify the pixels of image
     def modify_Pix(self,pix, data):
@@ -314,20 +328,7 @@ class STEG():
             yield pix[6:9]
     
     
-    #Function to enter the data pixels in image
-    def encode_enc(self,newImg, data):
-        w = newImg.size[0]
-        (x, y) = (0, 0)
-
-        for pixel in self.modify_Pix(newImg.getdata(), data):
-
-            # Placing modified pixels in the new image
-            newImg.putpixel((x, y), pixel)
-            if (x == w - 1):
-                x = 0
-                y += 1
-            else:
-                x += 1
+    
 
     
     #Function to enter hidden text
