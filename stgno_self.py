@@ -244,7 +244,101 @@ class STEG():
 
 
 
+    #Function to decrypt data
+    def decode(self, image):
+        image_data = iter(image.getdata())
+        data = ''
+
+        while (True):
+            pixels = [value for value in image_data.__next__()[:3] +
+                      image_data.__next__()[:3] +
+                      image_data.__next__()[:3]]
+            binary_str = ''
+            for i in pixels[:8]:
+                if i % 2 == 0:
+                    binary_str += '0'
+                else:
+                    binary_str += '1'
+
+            data += chr(int(binary_str, 2))
+            if pixels[-1] % 2 != 0:
+                return data
+
+    #Function to generate data
+    def generate_Data(self,data):
+        new_data = []
+
+        for i in data:
+            new_data.append(format(ord(i), '08b'))
+        return new_data
+
+
+    #Function to modify the pixels of image
+    def modify_Pix(self,pix, data):
+        dataList = self.generate_Data(data)
+        dataLen = len(dataList)
+        imgData = iter(pix)
+        for i in range(dataLen):
+            # Extracting 3 pixels at a time
+            pix = [value for value in imgData.__next__()[:3] +
+                   imgData.__next__()[:3] +
+                   imgData.__next__()[:3]]
+            
+            for j in range(0, 8):
+                if (dataList[i][j] == '0') and (pix[j] % 2 != 0):
+                    if (pix[j] % 2 != 0):
+                        pix[j] -= 1
+
+                elif (dataList[i][j] == '1') and (pix[j] % 2 == 0):
+                    pix[j] -= 1
+            
+            if (i == dataLen - 1):
+                if (pix[-1] % 2 == 0):
+                    pix[-1] -= 1
+            else:
+                if (pix[-1] % 2 != 0):
+                    pix[-1] -= 1
+
+            pix = tuple(pix)
+            yield pix[0:3]
+            yield pix[3:6]
+            yield pix[6:9]
     
+    
+    #Function to enter the data pixels in image
+    def encode_enc(self,newImg, data):
+        w = newImg.size[0]
+        (x, y) = (0, 0)
+
+        for pixel in self.modify_Pix(newImg.getdata(), data):
+
+            # Placing modified pixels in the new image
+            newImg.putpixel((x, y), pixel)
+            if (x == w - 1):
+                x = 0
+                y += 1
+            else:
+                x += 1
+
+    
+    #Function to enter hidden text
+    def enc_fun(self,text_a,myImg):
+        data = text_a.get("1.0", "end-1c")
+        if (len(data) == 0):
+            messagebox.showinfo("Alert","You must enter some text in TextBox")
+        else:
+            newImg = myImg.copy()
+            self.encode_enc(newImg, data)
+            my_file = BytesIO()
+            temp=os.path.splitext(os.path.basename(myImg.filename))[0]
+            newImg.save(tkinter.filedialog.asksaveasfilename(initialfile=temp,filetypes = ([('png', '*.png')]),defaultextension=".png"))
+            self.d_image_size = my_file.tell()
+            self.d_image_w,self.d_image_h = newImg.size
+            messagebox.showinfo("Success","Encoding Successful!!\nThe file has been saved as a .png file in the same directory!\n")
+
+    def frame_3(self,frame):
+        frame.destroy()
+        self.main(root)
 
 
 ###############################################################################################################################################################################################################
