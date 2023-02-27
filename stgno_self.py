@@ -73,6 +73,7 @@ class STEG():
         MS_label1=customtkinter.CTkLabel(tab3, text='Message Stegnography 📨',font=("Papyrus", 27,"bold"))#,bg="black", fg="#F7FF06")
         MS_label1.place(relx=0.5,rely=0.065, anchor=CENTER)
         
+
        
             
 
@@ -97,7 +98,29 @@ class STEG():
         nav_exit2 = customtkinter.CTkButton(tab3 ,text="Exit",command= exit, font=("Papyrus", 18,"bold"))
         nav_exit2.place(relx=0.87,rely=0.905, anchor=CENTER)
 
-    
+        
+
+        #Buttons for Image Steg
+
+        encode = customtkinter.CTkButton(tab2,text="Encrypt Image",command= lambda :self.encode_frame1(tabControl), font=("Papyrus", 16,"bold"))
+        encode.place(relx=0.5,rely=0.405, anchor=CENTER)
+        decode = customtkinter.CTkButton(tab2, text="Decrypt Image",command=lambda :self.decode_frame1(tabControl), font=("Papyrus", 16,"bold"))
+        decode.place(relx=0.5,rely=0.505, anchor=CENTER)
+
+        nav_homeIS = customtkinter.CTkButton(tab2 ,text="Home 🏘️",command= select_home,  font=("Papyrus", 18,"bold"))
+        nav_homeIS.place(relx=0.87,rely=0.805, anchor=CENTER)
+        
+        #Buttons for Message Steg
+
+        encode = customtkinter.CTkButton(tab3,text="Encrypt Message",command= lambda :self.encode_msg_frame1(tabControl), font=("Papyrus", 16,"bold"))
+        encode.place(relx=0.5,rely=0.405, anchor=CENTER)
+        decode = customtkinter.CTkButton(tab3, text="Decrypt Message",command=lambda :self.decode_msg_frame1(tabControl), font=("Papyrus", 16,"bold"))
+        decode.place(relx=0.5,rely=0.505, anchor=CENTER)
+
+        nav_homeAS = customtkinter.CTkButton(tab3 ,text="Home 🏘️",command= select_home, font=("Papyrus", 18,"bold"))
+        nav_homeAS.place(relx=0.87,rely=0.805, anchor=CENTER)
+
+        
 
         
 
