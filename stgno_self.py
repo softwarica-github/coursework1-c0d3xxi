@@ -14,7 +14,7 @@ import customtkinter
 
 #Customization Themes
 customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
-customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
+customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
 from sqlalchemy import extract
 
@@ -36,7 +36,7 @@ class STEG():
         
         #footer:
 
-        lbl_CR=customtkinter.CTkLabel(root, text="Copyright © 2023   Parth Dhungana, All Rights Reserved.",font=("Papyrus", 16,"bold"), width=200)
+        lbl_CR=customtkinter.CTkLabel(root, text="Copyright © 2023   Parth Dhungana, All Rights Reserved.",font=("Papyrus", 16,"bold"))
         lbl_CR.place(relx=0.5,rely=0.980,anchor=CENTER)
 
         def select_IS():
@@ -61,6 +61,7 @@ class STEG():
         tabControl.add(tab1, text='Home 🏘️')
         tabControl.add(tab2, text='Image Stegnography 📷')
         tabControl.add(tab3, text='Message Stegnography 📨')
+        
 
         H_label1=customtkinter.CTkLabel(tab1, text='Home 🏘️',font=("Papyrus", 27,"bold"))
         H_label1.place(relx=0.5,rely=0.065, anchor=CENTER)
@@ -72,7 +73,26 @@ class STEG():
         MS_label1.place(relx=0.5,rely=0.065, anchor=CENTER)
 
        
-            
+        label1= customtkinter.CTkLabel(tab1,text='Welcome to the GUI based Stegnography tool.', font=("Papyrus", 24,"bold"))
+        label1.place(relx=0.5,rely=0.255, anchor=CENTER)
+        
+        label2= customtkinter.CTkLabel(tab1,text='Select your preferred system theme below:', font=("Papyrus", 20,"bold"))
+        label2.place(relx=0.5,rely=0.405, anchor=CENTER)
+        
+        label3= customtkinter.CTkLabel(tab1,text='Tools:', font=("Papyrus", 22,"bold"))
+        label3.place(relx=0.12,rely=0.705, anchor=CENTER)
+        
+        
+        #Window Theme (Dark Mode/Light Mode)
+        def change_appearance_mode_event(new_appearance_mode: str):
+                customtkinter.set_appearance_mode(new_appearance_mode)
+
+
+        appearance_mode_optionemenu = customtkinter.CTkOptionMenu(tab1, values=["Light", "Dark", "System"],command=change_appearance_mode_event, font=("Papyrus", 16, "bold"))
+        appearance_mode_optionemenu.place(relx=0.4,rely=0.455)
+        #default
+        appearance_mode_optionemenu.set("Dark")
+        
 
         #Buttons for Home
 
