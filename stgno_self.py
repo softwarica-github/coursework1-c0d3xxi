@@ -30,9 +30,7 @@ class STEG():
         root.iconbitmap(logo_path)
         root.resizable(width =False, height=False)
         root.config(bg = 'white')
-        # frame = Frame(root,bg='black')
-        # frame.pack(fill=BOTH, expand=1)
-
+       
         tabControl = ttk.Notebook(root)
         tabControl.pack()
         
@@ -51,7 +49,7 @@ class STEG():
             tabControl.select(0)
 
 
-        tab1 = customtkinter.CTkFrame(tabControl, width=800, height=600)#, bg="black")
+        tab1 = customtkinter.CTkFrame(tabControl, width=800, height=600)
         tab2 = customtkinter.CTkFrame(tabControl, width=800, height=600)
         tab3 = customtkinter.CTkFrame(tabControl, width=800, height=600)
 
@@ -64,13 +62,13 @@ class STEG():
         tabControl.add(tab2, text='Image Stegnography 📷')
         tabControl.add(tab3, text='Message Stegnography 📨')
 
-        H_label1=customtkinter.CTkLabel(tab1, text='Home 🏘️',font=("Papyrus", 27,"bold"))#,bg="black", fg="#F7FF06")
+        H_label1=customtkinter.CTkLabel(tab1, text='Home 🏘️',font=("Papyrus", 27,"bold"))
         H_label1.place(relx=0.5,rely=0.065, anchor=CENTER)
 
-        IS_label1=customtkinter.CTkLabel(tab2, text='Image Stegnography 📷',font=("Papyrus", 27,"bold"))#,bg="black", fg="#F7FF06")
+        IS_label1=customtkinter.CTkLabel(tab2, text='Image Stegnography 📷',font=("Papyrus", 27,"bold"))
         IS_label1.place(relx=0.5,rely=0.065, anchor=CENTER)
 
-        MS_label1=customtkinter.CTkLabel(tab3, text='Message Stegnography 📨',font=("Papyrus", 27,"bold"))#,bg="black", fg="#F7FF06")
+        MS_label1=customtkinter.CTkLabel(tab3, text='Message Stegnography 📨',font=("Papyrus", 27,"bold"))
         MS_label1.place(relx=0.5,rely=0.065, anchor=CENTER)
 
        
@@ -330,15 +328,6 @@ class STEG():
     def frame_3(self,frame):
         frame.destroy()
         self.main(root)
-
-
-###############################################################################################################################################################################################################
-
-
-#-----------------------------------Message steg---------------------------
-
-
-#$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
 root = customtkinter.CTk()
