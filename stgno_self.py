@@ -72,16 +72,7 @@ class STEG():
 
         MS_label1=customtkinter.CTkLabel(tab3, text='Message Stegnography 📨',font=("Papyrus", 27,"bold"))#,bg="black", fg="#F7FF06")
         MS_label1.place(relx=0.5,rely=0.065, anchor=CENTER)
-        
-            #Window Theme (Dark Mode/Light Mode)
-        def change_appearance_mode_event(new_appearance_mode: str):
-                customtkinter.set_appearance_mode(new_appearance_mode)
 
-
-        appearance_mode_optionemenu = customtkinter.CTkOptionMenu(tab1, values=["Light", "Dark", "System"],command=change_appearance_mode_event, font=("Papyrus", 16, "bold"))
-        appearance_mode_optionemenu.place(relx=0.75,rely=0.015)
-        #default
-        appearance_mode_optionemenu.set("Dark")
        
             
 
@@ -192,14 +183,14 @@ class STEG():
             my_img = Image.open(myfile)
             new_image = my_img.resize((300,200))
             img = ImageTk.PhotoImage(new_image)
-            label3= customtkinter.CTkLabel(e_pg,text='Selected Image',font=("Papyrus", 20,"bold"))
+            label3= Label(e_pg,text='Selected Image',font=("Papyrus", 20,"bold"))
             label3.place(relx=0.5,rely=0.1, anchor=CENTER)
-            board = Label(e_pg, image=img)
+            board = customtkinter.CTkLabel(e_pg, image=img)
             board.image = img
             self.output_image_size = os.stat(myfile)
             self.o_image_w, self.o_image_h = my_img.size
             board.place(relx=0.5,rely=0.3, anchor=CENTER)
-            label2 = customtkinter.CTkLabel(e_pg, text='Enter the message',font=("Papyrus", 30,"bold"))
+            label2 = customtkinter.CTkLabel(e_pg, text='Enter the message',font=("Papyrus", 20,"bold"))
             label2.place(relx=0.5,rely=0.56, anchor=CENTER)
             text_a = Text(e_pg, width=50, height=10)
             text_a.place(relx=0.5,rely=0.7, anchor=CENTER)
@@ -228,7 +219,7 @@ class STEG():
             img = ImageTk.PhotoImage(my_image)
             label4= customtkinter.CTkLabel(d_F3,text='Selected Image :', font=("Papyrus", 20,"bold"))
             label4.place(relx=0.5,rely=0.1, anchor=CENTER)
-            board = customtkinter.CTkLabel(d_F3, image=img)
+            board = Label(d_F3, image=img)
             board.image = img
             board.place(relx=0.5,rely=0.3, anchor=CENTER)
             hidden_data = self.decode(my_img)
